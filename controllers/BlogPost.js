@@ -13,3 +13,10 @@ exports.fetchAllPosts = (req, res, next) => {
     .then(posts => res.status(200).send({ posts }))
     .catch(err => res.status(400).send({ err }))
 }
+
+exports.fetchPostByID = (req, res, next) => {
+  const blogPostID = req.body.blogPostID
+  BlogPost.findById(blogPostID)
+    .then(blogPost => res.send({ blogPost }))
+    .catch(err => res.status(400).send({ err }))
+}

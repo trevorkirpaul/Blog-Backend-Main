@@ -27,6 +27,9 @@ module.exports = app => {
   app.post('/blogpost', BlogPostController.create)
 
   // FETCH ALL
-  app.get('/blogpost', BlogPostController.fetchAllPosts)
+  app.get('/blogposts', BlogPostController.fetchAllPosts)
+
+  // FETCH BY ID
+  app.post('/blogpost/fetch', BlogPostController.fetchPostByID)
 
 }
