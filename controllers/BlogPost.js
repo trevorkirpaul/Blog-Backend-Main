@@ -1,9 +1,21 @@
 const BlogPost = require("../models/blogPost");
+const User = require("../models/user");
+const jwt = require("../services/jwt");
+const { readToken } = jwt;
 
 exports.create = (req, res, next) => {
-  const blogPost = req.body;
-  BlogPost.create(blogPost)
-    .then(blogpost => res.status(201).send({ blogpost }))
+  const blogPostInfo = req.body.blogPost;
+  const decodedToken = readToken(req.body.token);
+
+  const blogPost = {
+    ...blogPostInfo,
+    author: decodedToken.userID
+  };
+
+  //auth
+  User.findById(decodedToken.userID)
+    .then(() => BlogPost.create(blogPost))
+    .then(newBlogPost => res.status(201).send({ blogpost: newBlogPost }))
     .catch(err => res.status(400).send({ err }));
 };
 

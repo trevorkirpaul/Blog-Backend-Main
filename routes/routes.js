@@ -6,7 +6,7 @@ const reqSignIn = passport.authenticate("local", { session: false });
 const requireAuth = passport.authenticate("jwt", { session: false });
 
 module.exports = app => {
-  app.get("/", (req, res, next) => {
+  app.get("/", (req, res) => {
     res.send({ message: "This is the parent level API" });
   });
 
